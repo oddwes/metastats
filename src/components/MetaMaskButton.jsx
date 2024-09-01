@@ -1,10 +1,8 @@
 import { useWeb3React } from "@web3-react/core";
-import { useState } from "react";
 import Web3 from "web3";
 
 const MetaMaskButton = () => {
-  const [loading, setLoading] = useState(false)
-  const { connector, hooks } = useWeb3React();
+  const { connector } = useWeb3React();
 
   const onConnectMetaMask = async () => {
     const chainId = process.env.REACT_APP_SUPPORT_CHAIN_ID || "5";
@@ -23,12 +21,10 @@ const MetaMaskButton = () => {
           console.log("Network changed rejected", err);
         }
       } else {
-        setLoading(true);
         try {
           await connector.activate(chainId);
         } catch (err) {
           console.log("User rejected the request", err);
-          setLoading(false);
         }
       }
     } catch (error) {
