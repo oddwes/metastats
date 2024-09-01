@@ -37,6 +37,10 @@
   }
 }
 
-.sidebar {
+.dark-background {
   background-color: #282c34;
+}
+
+.header {
+  padding: 10px;
 }

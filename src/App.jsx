@@ -1,30 +1,18 @@
-import { Col, Container, Nav, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import './App.css';
 import React from 'react';
-import { RouterProvider } from 'react-router-dom';
-import { router } from './routes';
 import { Web3ReactProvider } from '@web3-react/core';
-import { connectors } from './connectors';
-import MetaMaskButton from './components/MetaMaskButton';
+import { connectors } from './utils/connectors';
+import Header from './components/Header';
+import Mainpanel from './components/Mainpanel';
 
 function App() {
   return (
     <Web3ReactProvider connectors={connectors}>
       <div className="App">
         <Container fluid>
-          <Row>
-            <Col xs={2} className="sidebar">
-              <Nav defaultActiveKey="/home" className="flex-column">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/performance">Performance</Nav.Link>
-                <Nav.Link href="/transactions">Transactions</Nav.Link>
-              </Nav>
-            </Col>
-            <Col>
-              <RouterProvider router={router} />
-            </Col>
-          </Row>
-          <MetaMaskButton />
+          <Header />
+          <Mainpanel />
         </Container>
       </div>
     </Web3ReactProvider>
