@@ -1,4 +1,4 @@
-import { Col, Nav } from "react-bootstrap"
+import { Card, Col, Nav } from "react-bootstrap"
 import '../styles/Sidepanel.css'
 import Home from "./Home"
 import Performance from "./Performance"
@@ -6,7 +6,7 @@ import Transactions from "./Transactions"
 
 const Sidepanel = ({setBody}) => {
   return (
-    <Col xs={2} className="dark-background">
+    <Card className="dark-background">
       <Nav defaultActiveKey="/" className="flex-column">
         <Nav.Link
           className="link"
@@ -27,7 +27,7 @@ const Sidepanel = ({setBody}) => {
           Transactions
         </Nav.Link>
       </Nav>
-    </Col>
+    </Card>
   )
 }
 
