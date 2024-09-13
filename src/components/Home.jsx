@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
 
 const Home = () => {
-  const { isActive, chainId, account } = useWeb3React();
+  const { isActive, chainId, account } = useWeb3React()
   const [balance, setBalance] = useState(0)
 
   const getBalance = async () => {

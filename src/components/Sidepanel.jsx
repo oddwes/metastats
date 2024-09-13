@@ -1,4 +1,4 @@
-import { Card, Col, Nav } from "react-bootstrap"
+import { Card, Nav } from "react-bootstrap"
 import '../styles/Sidepanel.css'
 import Home from "./Home"
 import Performance from "./Performance"
