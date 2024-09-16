@@ -1,32 +1,40 @@
-import { Card, Nav } from "react-bootstrap"
-import '../styles/Sidepanel.css'
 import Home from "./Home"
 import Performance from "./Performance"
 import Transactions from "./Transactions"
+import { Card, Container, Link } from "@mui/material"
 
 const Sidepanel = ({setBody}) => {
   return (
     <Card className="dark-background">
-      <Nav defaultActiveKey="/" className="flex-column">
-        <Nav.Link
-          className="link"
-          onClick={() => setBody(<Home />)}
-        >
-          Home
-        </Nav.Link>
-        <Nav.Link
-          className="link"
-          onClick={() => setBody(<Performance />)}
-        >
-          Performance
-        </Nav.Link>
-        <Nav.Link
-          className="link"
-          onClick={() => setBody(<Transactions />)}
-        >
-          Transactions
-        </Nav.Link>
-      </Nav>
+      <Container>
+        <div>
+          <Link
+            href='#'
+            underline='never'
+            onClick={() => setBody(<Home />)}
+          >
+            Home
+          </Link>
+        </div>
+        <div>
+          <Link
+            href='#'
+            underline='never'
+            onClick={() => setBody(<Transactions />)}
+          >
+            Transactions
+          </Link>
+        </div>
+        <div>
+          <Link
+            href='#'
+            underline='never'
+            onClick={() => setBody(<Performance />)}
+          >
+            Performance
+          </Link>
+        </div>
+      </Container>
     </Card>
   )
 }

@@ -1,20 +1,21 @@
 import { useState } from "react"
 import Home from "./Home"
 import Grid from "@mui/material/Grid2"
-import { Card, Container } from "@mui/material"
+import { Container, Box, Card } from "@mui/material"
 import Sidepanel from "./Sidepanel"
+
 import '../styles/Mainpanel.css'
 
 const Mainpanel = () => {
   const [body, setBody] = useState(<Home/>)
 
   return (
-    <Container fixed>
+    <Container>
       <Grid container spacing={2}>
-        <Grid xs={2}>
+        <Grid size={2}>
           <Sidepanel setBody={setBody}/>
         </Grid>
-        <Grid xs={10}>
+        <Grid size={10}>
           <Card>
             {body}
           </Card>

@@ -62,7 +62,6 @@ const Transactions = () => {
 
   return (
     <div>
-      Transactions
       <div>
         {printTransactions()}
       </div>

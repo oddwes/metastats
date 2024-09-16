@@ -1,3 +1,4 @@
+import { Container } from '@mui/material';
 import { useWeb3React } from '@web3-react/core';
 import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
@@ -19,13 +20,12 @@ const Home = () => {
   }, [isActive])
 
   return (
-    <header>
+    <Container sx={{textAlign:'center'}}>
       <div>Connection Status: {isActive ? 'Active':'Inactive'}</div>
       <div>Account {account}</div>
       <div>Chain ID {chainId}</div>
       <div>Balance {balance} ETH</div>
-
-    </header>
+    </Container>
   )
 }
 
