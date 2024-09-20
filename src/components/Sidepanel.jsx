@@ -10,7 +10,7 @@ const Sidepanel = ({setBody}) => {
         <div>
           <Link
             href='#'
-            underline='never'
+            underline='none'
             onClick={() => setBody(<Home />)}
           >
             Home
@@ -19,7 +19,7 @@ const Sidepanel = ({setBody}) => {
         <div>
           <Link
             href='#'
-            underline='never'
+            underline='none'
             onClick={() => setBody(<Transactions />)}
           >
             Transactions
@@ -28,7 +28,7 @@ const Sidepanel = ({setBody}) => {
         <div>
           <Link
             href='#'
-            underline='never'
+            underline='none'
             onClick={() => setBody(<Performance />)}
           >
             Performance
