@@ -1,12 +1,12 @@
 import Home from "./Home"
 import Performance from "./Performance"
 import Transactions from "./Transactions"
-import { Card, Container, Link } from "@mui/material"
+import { Card, Box, Link } from "@mui/material"
 
-const Sidepanel = ({setBody}) => {
+const Sidepanel = ({ setBody }) => {
   return (
     <Card className="dark-background">
-      <Container>
+      <Box p={2}>
         <div>
           <Link
             href='#'
@@ -34,7 +34,7 @@ const Sidepanel = ({setBody}) => {
             Performance
           </Link>
         </div>
-      </Container>
+      </Box>
     </Card>
   )
 }

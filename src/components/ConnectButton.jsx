@@ -2,14 +2,14 @@ import { useWeb3React } from "@web3-react/core";
 import "../styles/ConnectButton.css"
 import { connectWallet } from "../utils/connectors";
 import metamask_logo from "../assets/images/metamask.png"
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 const MetaMaskButton = () => {
-  const { connector, isActive } = useWeb3React();
+  const { connector, isActive } = useWeb3React()
 
   useEffect(() => {
     connectWallet(connector)
-  }, [])
+  }, [connector])
 
   const onDisconnectMetaMask = () => {
     if (connector?.deactivate) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getAssetTransfers } from '../alchemy/Transactions';
+import { getTransfers } from '../utils/Alchemy';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,21 +7,30 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useWeb3React } from '@web3-react/core';
 
 const Transactions = () => {
-  const [transactions, setTransactions] = useState()
-
-  const getTransactions = async () => {
-    const assetTransfers = await getAssetTransfers()
-    setTransactions(assetTransfers)
-  }
+  const { account } = useWeb3React()
+  const [transactions, setTransactions] = useState([])
 
   useEffect(() => {
+    const getTransactions = async () => {
+      if(!!account) {
+        const assetTransfers = []
+        let response
+        response = await getTransfers(account, 'from')
+        assetTransfers.push(...response)
+        response = await getTransfers(account, 'to')
+        assetTransfers.push(...response)
+        setTransactions(assetTransfers)
+      }
+    }
+
     getTransactions()
-  }, [])
+  }, [account])
 
   const printTransactions = () => {
-    if(!transactions) {
+    if(transactions.length < 1) {
       return
     }
     const headers = Object.keys(transactions[0])
