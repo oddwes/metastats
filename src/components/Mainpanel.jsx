@@ -19,9 +19,7 @@ const Mainpanel = () => {
               <Sidepanel setBody={setBody}/>
             </Grid>
             <Grid size={10}>
-              <Card>
-                {body}
-              </Card>
+              {body}
             </Grid>
           </Grid>
         </Box>

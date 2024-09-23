@@ -1,5 +1,5 @@
 import Home from "./Home"
-import Performance from "./Performance"
+import Send from "./Send"
 import Transactions from "./Transactions"
 import { Card, Box, Link } from "@mui/material"
 
@@ -29,9 +29,9 @@ const Sidepanel = ({ setBody }) => {
           <Link
             href='#'
             underline='none'
-            onClick={() => setBody(<Performance />)}
+            onClick={() => setBody(<Send />)}
           >
-            Performance
+            Send
           </Link>
         </div>
       </Box>

@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useWeb3React } from '@web3-react/core';
+import { Card } from '@mui/material';
 
 const Transactions = () => {
   const { account } = useWeb3React()
@@ -70,11 +71,9 @@ const Transactions = () => {
   }
 
   return (
-    <div>
-      <div>
-        {printTransactions()}
-      </div>
-    </div>
+    <Card>
+      {printTransactions()}
+    </Card>
   )
 }
 

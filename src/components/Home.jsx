@@ -2,7 +2,6 @@ import { Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getBalance} from '../utils/Alchemy';
 import { useWeb3React } from '@web3-react/core';
-import Web3 from 'web3';
 
 const Home = () => {
   const { chainId, account } = useWeb3React()
@@ -16,6 +15,8 @@ const Home = () => {
 
     if (!!account) {
       callGetBalance()
+    } else {
+      setBalance()
     }
   }, [account])
 
