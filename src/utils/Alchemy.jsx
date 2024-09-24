@@ -1,4 +1,4 @@
-import { Alchemy, Network, Utils, Wallet } from "alchemy-sdk";
+import { Alchemy, Network, Utils } from "alchemy-sdk";
 import Web3 from "web3";
 
 const API_kEY = process.env.REACT_APP_ALCHEMY_API_KEY
@@ -53,7 +53,13 @@ export const getTransfers = async (address, direction) => {
     .then(responseJSON => responseJSON.result?.transfers || [])
 }
 
-export const sendTransaction = async (sender, recipient, amount, setLoading) => {
+export const getMaxPriorityFeePerGas = async (setMaxPriorityFeePerGas) => {
+  await getAlchemy().transact.getMaxPriorityFeePerGas()
+    .then(weiValue => Utils.formatUnits(weiValue, "ether"))
+    .then(feeInEther => setMaxPriorityFeePerGas(feeInEther))
+}
+
+export const sendTransaction = async (sender, recipient, value, setLoading) => {
   setLoading(true)
   window.ethereum
     .request({
@@ -61,15 +67,18 @@ export const sendTransaction = async (sender, recipient, amount, setLoading) => 
       params: [{
         from: sender,
         to: recipient,
-        value: Web3.utils.toWei(amount, 'ether'),
-        gasLimit: '0x5028',
-        maxPriorityFeePerGas: '0x3b9aca00',
-        maxFeePerGas: '0x2540be400',
+        value: Utils.parseEther(value).toHexString(),
       }]
     })
     .then((txHash) => {
       console.log(txHash)
       setLoading(false)
     })
-    .catch((error) => console.error(error))
+    .catch((error) => {
+      if(error.code === 4001) {
+        setLoading(false)
+      } else {
+        console.error(error)
+      }
+    })
 }

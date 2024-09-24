@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Card } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getBalance} from '../utils/Alchemy';
 import { useWeb3React } from '@web3-react/core';
@@ -21,11 +21,13 @@ const Home = () => {
   }, [account])
 
   return (
-    <Box sx={{textAlign:'center'}} p={2}>
-      <div>Account {account}</div>
-      <div>Chain {chainId}</div>
-      <div>Balance {balance} ETH</div>
-    </Box>
+    <Card>
+      <Box sx={{textAlign:'center'}} p={2}>
+        <div>Account {account}</div>
+        <div>Chain {chainId}</div>
+        <div>Balance {balance} ETH</div>
+      </Box>
+    </Card>
   )
 }
 
