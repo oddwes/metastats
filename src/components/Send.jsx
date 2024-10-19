@@ -1,7 +1,7 @@
 import { Box, Card, InputAdornment, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
-import { getMaxPriorityFeePerGas, sendTransaction } from '../utils/Alchemy';
+import { getBalance, getMaxPriorityFeePerGas, sendTransaction } from '../utils/Alchemy';
 import { useWeb3React } from '@web3-react/core';
 
 
@@ -16,6 +16,21 @@ const Send = () => {
   useEffect(() => {
     getMaxPriorityFeePerGas(setMaxPriorityFeePerGas)
   }, [])
+
+  const [balance, setBalance] = useState(0)
+
+  useEffect(() => {
+    const callGetBalance = async () => {
+      const response = await getBalance(account)
+      setBalance(response)
+    }
+
+    if (!!account) {
+      callGetBalance()
+    } else {
+      setBalance()
+    }
+  }, [account])
 
   const isValidAddress = (address) => {
     if(address.length !== 42) {
@@ -80,6 +95,25 @@ const Send = () => {
               inputLabel: {
                 shrink: true,
               }
+            }}
+          />
+        </Box>
+        <Box mb={2}>
+          <TextField
+            id="current_balance"
+            label="Current Balance"
+            size="small"
+            type="number"
+            sx={{width:'40%'}}
+            value={balance}
+            readOnly={true}
+            slotProps={{
+              inputLabel: {
+                shrink: true,
+              },
+              input: {
+                endAdornment: <InputAdornment position="end">ETH</InputAdornment>
+              },
             }}
           />
         </Box>
