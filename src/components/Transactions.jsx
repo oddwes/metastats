@@ -14,6 +14,8 @@ const Transactions = () => {
   const { account } = useWeb3React()
   const [transactions, setTransactions] = useState([])
 
+  const headers = ['hash', 'from', 'to', 'value']
+
   useEffect(() => {
     const getTransactions = async () => {
       if(!!account) {
@@ -34,7 +36,6 @@ const Transactions = () => {
     if(transactions.length < 1) {
       return
     }
-    const headers = Object.keys(transactions[0])
 
     return (
       <TableContainer component={Paper}>
@@ -42,24 +43,26 @@ const Transactions = () => {
           <TableHead>
             <TableRow>
             <TableCell>{headers[0]}</TableCell>
-              {headers.splice(1, headers.length).map((header) => (
+              {headers.slice(1, headers.length).map((header) => (
                 <TableCell align="right">{header}</TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {transactions
-              .map((row) => Object.values(row))
               .map((row) => (
                 <TableRow
-                  key={row[0]}
+                  key={row.hash}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row[0]}
+                    {row[headers[0]]}
                   </TableCell>
-                  {row.splice(1, row.length).map((column) => (
-                    <TableCell align="right">{JSON.stringify(column)}</TableCell>
+                  {console.log(headers)}
+                  {headers.slice(1, headers.length).map((header) => (
+                    <TableCell align="right">
+                      {row[header]}
+                    </TableCell>
                   ))}
                 </TableRow>
               ))
