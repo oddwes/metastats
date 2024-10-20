@@ -1,5 +1,6 @@
 import { Alchemy, Network, Utils } from "alchemy-sdk";
 import Web3 from "web3";
+import dayjs from "dayjs";
 
 const API_kEY = process.env.REACT_APP_ALCHEMY_API_KEY
 
@@ -19,9 +20,9 @@ export const getTransactionCount = async (address) => {
 export const getBalance = async (address) => {
   const alchemy = getAlchemy()
   return await alchemy.core.getBalance(address, "latest")
-    .then(response => response.toHexString())
-    .then(balanceInHex => Web3.utils.hexToNumberString(balanceInHex))
-    .then(balanceInWei => Web3.utils.fromWei(balanceInWei, 'ether'))
+    .then(response => parseBigInt(response))
+    // .then(balanceInHex => Web3.utils.hexToNumberString(balanceInHex))
+    // .then(balanceInWei => Web3.utils.fromWei(balanceInWei, 'ether'))
 }
 
 export const getTransfers = async (address, direction) => {
@@ -53,6 +54,11 @@ export const getTransfers = async (address, direction) => {
     .then(responseJSON => responseJSON.result?.transfers || [])
 }
 
+export const getBlock = async (blockNum) => {
+  const alchemy = getAlchemy()
+  return await alchemy.core.getBlock(blockNum)
+}
+
 export const getMaxPriorityFeePerGas = async (setMaxPriorityFeePerGas) => {
   await getAlchemy().transact.getMaxPriorityFeePerGas()
     .then(weiValue => Utils.formatUnits(weiValue, "ether"))
@@ -81,4 +87,21 @@ export const sendTransaction = async (sender, recipient, value, setLoading) => {
         console.error(error)
       }
     })
+}
+
+export const parseBigInt = (bigIntValue) => {
+  if(!bigIntValue) {
+    return
+  }
+
+  const balanceInHex = bigIntValue.toHexString()
+  const balanceInWei = Web3.utils.hexToNumberString(balanceInHex)
+  return Web3.utils.fromWei(balanceInWei, 'ether')
+}
+
+export const parseTimeStamp = (timestamp) => {
+  if(!timestamp) {
+    return
+  }
+  return dayjs.unix(timestamp).format('DD/MM/YYYY')
 }

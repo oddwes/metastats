@@ -82,6 +82,11 @@ const Send = () => {
             sx={{width:'60%'}}
             value={account}
             readOnly={true}
+            slotProps={{
+              inputLabel: {
+                shrink: true,
+              }
+            }}
           />
         </Box>
         <Box mb={2}>

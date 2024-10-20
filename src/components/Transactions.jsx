@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getTransfers } from '../utils/Alchemy';
+import { getBlock, getTransfers, parseBigInt, parseTimeStamp } from '../utils/Alchemy';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,12 +9,14 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useWeb3React } from '@web3-react/core';
 import { Card } from '@mui/material';
+import dayjs from 'dayjs';
 
 const Transactions = () => {
   const { account } = useWeb3React()
   const [transactions, setTransactions] = useState([])
+  const [blocks, setBlocks] = useState({})
 
-  const headers = ['hash', 'from', 'to', 'value']
+  const headers = ['blockNum', 'date', 'hash', 'from', 'to', 'value', 'gas used']
 
   useEffect(() => {
     const getTransactions = async () => {
@@ -31,6 +33,17 @@ const Transactions = () => {
 
     getTransactions()
   }, [account])
+
+  useEffect(() => {
+    const getBlockData = async () => {
+      transactions.forEach(async (transaction) => {
+        const response = await getBlock(transaction.blockNum)
+        blocks[transaction.blockNum] = response
+        setBlocks({...blocks})
+      })
+    }
+    getBlockData()
+  }, [transactions])
 
   const printTransactions = () => {
     if(transactions.length < 1) {
@@ -56,14 +69,14 @@ const Transactions = () => {
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row[headers[0]]}
+                    {row.blockNum}
                   </TableCell>
-                  {console.log(headers)}
-                  {headers.slice(1, headers.length).map((header) => (
-                    <TableCell align="right">
-                      {row[header]}
-                    </TableCell>
-                  ))}
+                  <TableCell align="right"><div>{parseTimeStamp(blocks[row.blockNum]?.timestamp)}</div></TableCell>
+                  <TableCell align="right">{row.hash}</TableCell>
+                  <TableCell align="right">{row.from}</TableCell>
+                  <TableCell align="right">{row.to}</TableCell>
+                  <TableCell align="right">{row.value}</TableCell>
+                  <TableCell align="right">{parseBigInt(blocks[row.blockNum]?.gasUsed)}</TableCell>
                 </TableRow>
               ))
             }
